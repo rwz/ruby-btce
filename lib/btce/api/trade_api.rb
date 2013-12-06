@@ -81,11 +81,13 @@ module Btce
                       :signed => signed })
     end
 
+    def self.nonce
+      @nonce ||= 10**9
+      @nonce += 1
+    end
+
     def nonce
-      while result = Time.now.to_i and @last_nonce and @last_nonce >= result
-        sleep 1
-      end
-      return @last_nonce = result
+      self.class.nonce
     end
     private :nonce
 
